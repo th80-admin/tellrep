@@ -1,0 +1,19 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="Imprint | TellRep">
+  <article class="wrap legal">
+    <h1>Imprint</h1>
+    <p><b>TellRep</b><br />[Legal form and registered name follow on incorporation]<br />[Street and number]<br />[Postcode] [Town], Switzerland</p>
+    <p>Email: <a href="mailto:info@tellrep.ch">info@tellrep.ch</a><br />Phone: [follows]</p>
+    <p>Commercial register: [follows]<br />UID: [follows]<br />Responsible for content: Tim Hartkorn</p>
+    <h2>Disclaimer</h2>
+    <p>The information on this website is provided for general guidance and reflects the legal situation as of October 2026. It is not legal advice. Binding are the official texts published on fedlex.admin.ch and the guidance of Swissmedic.</p>
+  </article>
+</Base>
+<style>
+  .legal { max-width: 720px; padding-block: clamp(48px, 7vw, 96px); display: grid; gap: 16px; }
+  h1 { font-size: clamp(36px, 5vw, 52px); letter-spacing: -0.03em; }
+  h2 { font-size: 22px; margin-top: 12px; }
+  p { color: var(--slate); }
+</style>

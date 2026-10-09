@@ -1,0 +1,193 @@
+---
+import Apple from "./Apple.astro";
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || "";
+const key = import.meta.env.PUBLIC_FORM_KEY || "";
+const classes = ["IVD-A", "IVD-B", "IVD-C", "IVD-D", "MD-I", "MD-IIa", "MD-IIb", "MD-III"];
+const preset = ["IVD-B", "IVD-C"];
+---
+<section class="band" id="analysis">
+  <div class="wrap">
+    <div class="head">
+      <span class="label" data-reveal>Free CH-REP analysis</span>
+      <h2 class="big" data-reveal>Tell us what you sell. We tell you what Switzerland needs.</h2>
+      <p class="lead" data-reveal>Tick what applies. You see your Swiss to-do list right away; within two working days you receive our written gap analysis and a personal offer.</p>
+    </div>
+
+    <div class="panel" data-reveal>
+      <form id="qform" novalidate data-endpoint={endpoint} data-key={key}>
+        <fieldset>
+          <legend>Your company</legend>
+          <div class="f2">
+            <label class="fld"><span>Company</span><input id="company" autocomplete="organization" required /></label>
+            <label class="fld"><span>Country</span><input id="country" autocomplete="country-name" required /></label>
+            <label class="fld"><span>Your name</span><input id="name" autocomplete="name" required /></label>
+            <label class="fld"><span>Business email</span><input id="email" type="email" autocomplete="email" required /></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Your devices</legend>
+          <span class="sub">Risk classes, all that apply</span>
+          <div class="chips" id="classes">
+            {classes.map((c) => (
+              <label class="chip"><input type="checkbox" value={c} checked={preset.includes(c)} /><span>{c.replace("-", " ")}</span></label>
+            ))}
+          </div>
+          <div class="f2">
+            <label class="fld"><span>Product families</span><input id="families" type="number" min="1" max="200" value="8" /></label>
+            <label class="fld"><span>UDI-DIs to register</span><input id="udis" type="number" min="0" max="5000" value="30" /></label>
+          </div>
+          <label class="fld"><span>Your Swiss situation today</span>
+            <select id="situation">
+              <option>Not yet selling in Switzerland</option>
+              <option selected>Selling through a distributor, no CH-REP</option>
+              <option>We have a CH-REP and want to change</option>
+              <option>Not sure</option>
+            </select>
+          </label>
+        </fieldset>
+        <fieldset>
+          <legend>Services</legend>
+          <label class="opt"><input type="checkbox" id="s-rep" checked disabled /><span><b>CH-REP mandate</b><small>Mandate, document review, swissdamed registration, PRRC, annual review</small></span><em>core</em></label>
+          <label class="opt"><input type="checkbox" id="s-label" /><span><b>Label and IFU check DE · FR · IT</b><small>Swiss labelling details and language versions, per product family</small></span><em>add-on</em></label>
+          <label class="opt"><input type="checkbox" id="s-fees" checked /><span><b>Handle Swissmedic registration fees</b><small>We pay the swissdamed fees to Swissmedic and pass them on at cost</small></span><em>add-on</em></label>
+          <label class="opt"><input type="checkbox" id="s-import" /><span><b>Import, warehousing and distribution</b><small>Through our partner TAmedics LabSolutions, offered separately</small></span><em>partner</em></label>
+          <label class="opt"><input type="checkbox" id="s-3y" /><span><b>Three year commitment</b><small>Better terms for a longer mandate</small></span><em>option</em></label>
+        </fieldset>
+        <label class="fld"><span>Anything else we should know?</span><textarea id="msg" placeholder="Product names, planned launch date, current distributor"></textarea></label>
+        <label class="consent"><input type="checkbox" id="consent" /><span>I agree that TellRep stores my details to prepare this analysis and contacts me about it. No newsletter, no sharing with third parties. See our <a href="/privacy">privacy notice</a>.</span></label>
+        <p class="err" id="err" hidden></p>
+        <button class="btn btn-red" type="submit" id="send">Request my free analysis</button>
+      </form>
+
+      <aside class="todo" aria-live="polite">
+        <span class="label">Your Swiss to-do list</span>
+        <span class="tier"><i></i><span id="tier">Standard</span>&nbsp;package</span>
+        <div id="qlines"></div>
+        <p class="note">Your personal offer follows by email within two working days, after a short check of your documents. No obligation.</p>
+        <div class="sent" id="sent" hidden>
+          <Apple id="sent" size={40} />
+          <span id="sentText"></span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .panel { background: var(--studio-0); border-radius: var(--r-lg); box-shadow: var(--shadow-3); display: grid; grid-template-columns: 1.2fr .8fr; overflow: hidden; }
+  form { padding: clamp(22px, 3vw, 36px); display: grid; gap: 26px; min-width: 0; }
+  fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 12px; min-width: 0; }
+  legend { font-family: var(--display); font-weight: 600; font-size: 18px; margin-bottom: 12px; padding: 0; }
+  .sub { font-size: 13.5px; font-weight: 600; }
+  .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .fld { display: grid; gap: 6px; min-width: 0; }
+  .fld > span { font-size: 13.5px; font-weight: 600; }
+  input:not([type=checkbox]), select, textarea { font: inherit; font-size: 15px; color: var(--ink); background: var(--studio-50); border: 1px solid var(--hairline); border-radius: var(--r-sm); padding: 11px 13px; width: 100%; transition: border-color .2s, box-shadow .2s, background .2s; }
+  input:not([type=checkbox]):focus, select:focus, textarea:focus { outline: none; background: #fff; border-color: var(--ink); box-shadow: 0 0 0 4px rgba(22,27,32,.06); }
+  textarea { min-height: 96px; resize: vertical; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .chip span { display: inline-block; padding: 7px 13px; border: 1px solid var(--hairline); border-radius: 999px; font-family: var(--mono); font-size: 13.5px; background: #fff; transition: all .2s; }
+  .chip input:checked + span { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .chip input:focus-visible + span { outline: 2px solid var(--red); outline-offset: 2px; }
+  .opt { display: grid; grid-template-columns: 22px 1fr auto; gap: 12px; align-items: start; padding: 13px 15px; border: 1px solid var(--hairline); border-radius: var(--r-md); background: #fff; cursor: pointer; transition: border-color .2s, background .2s; }
+  .opt:has(input:checked) { border-color: var(--ink); background: var(--studio-50); }
+  .opt input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--ink); }
+  .opt b { display: block; font-size: 15px; }
+  .opt small { color: var(--slate); font-size: 13.5px; display: block; line-height: 1.45; }
+  .opt em { font-style: normal; font-family: var(--mono); font-size: 12px; color: var(--mist); }
+  .consent { display: flex; gap: 10px; font-size: 13.5px; color: var(--slate); align-items: flex-start; }
+  .consent input { margin-top: 3px; accent-color: var(--ink); }
+  .err { color: var(--red); font-size: 14px; }
+  #send { justify-self: start; }
+  .todo { background: var(--studio-50); border-left: 1px solid var(--hairline); padding: clamp(22px, 3vw, 36px); display: grid; gap: 16px; align-content: start; min-width: 0; }
+  .tier { justify-self: start; display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12.5px; background: #fff; border-radius: 999px; padding: 6px 12px; box-shadow: var(--shadow-1); }
+  .tier i { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+  :global(.qline) { display: flex; justify-content: space-between; gap: 14px; font-size: 14.5px; border-bottom: 1px solid var(--hairline); padding-block: 11px; animation: qin .35s ease both; }
+  :global(.qline span:last-child) { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; color: var(--slate); }
+  :global(.qline .hot) { color: var(--red) !important; }
+  @keyframes qin { from { opacity: 0; transform: translateY(4px); } }
+  .note { font-size: 13.5px; color: var(--slate); }
+  .sent[hidden] { display: none; }
+  .sent { display: flex; gap: 12px; align-items: center; background: #fff; border-radius: var(--r-md); padding: 14px; box-shadow: var(--shadow-2); font-size: 14.5px; }
+  @media (max-width: 900px) { .panel { grid-template-columns: 1fr; } .todo { border-left: 0; border-top: 1px solid var(--hairline); } }
+  @media (max-width: 560px) { .f2 { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement;
+  const form = document.getElementById("qform") as HTMLFormElement;
+  const classes = () => [...document.querySelectorAll<HTMLInputElement>("#classes input:checked")].map((i) => i.value);
+
+  function scope() {
+    const cls = classes();
+    const fam = Math.max(1, parseInt($("families").value, 10) || 1);
+    const udi = Math.max(0, parseInt($("udis").value, 10) || 0);
+    const has = (c: string) => cls.includes(c);
+    const high = cls.some((c) => ["IVD-D", "MD-IIb", "MD-III"].includes(c)) || fam > 15;
+    const mid = cls.some((c) => ["IVD-C", "MD-IIa"].includes(c)) || fam > 5;
+    const tier = high ? "Premium" : mid ? "Standard" : "Basic";
+    const sit = ($("situation") as unknown as HTMLSelectElement).selectedIndex;
+    const todo: [string, string, string][] = [];
+    if (sit === 2) todo.push(["Transfer your CH-REP mandate and notify the change in swissdamed", "Art. 44 IvDO", "now"]);
+    else todo.push(["Appoint a Swiss authorised representative in writing", "Art. 44 IvDO", "now"]);
+    if (udi > 0) todo.push([`Register ${udi} UDI-DI${udi > 1 ? "s" : ""} in swissdamed`, "swissdamed", "by 31 Dec"]);
+    if (has("IVD-D")) todo.push(["Class D on IVDD transition: notified body agreement was due 26 Sep 2025", "Art. 82 IvDO", "we check"]);
+    if (has("IVD-C")) todo.push(["Class C on IVDD transition: notified body agreement was due 26 Sep 2026", "Art. 82 IvDO", "we check"]);
+    if (has("IVD-B") || has("IVD-A")) todo.push(["Class B or A sterile on IVDD transition: notified body agreement by 26 Sep 2027", "Art. 82 IvDO", "plan"]);
+    if (cls.some((c) => c.startsWith("IVD"))) todo.push(["CH-REP and importer on label or accompanying document", "Art. 15 IvDO", "before shipping"]);
+    if (cls.some((c) => c.startsWith("MD"))) todo.push(["Medical devices: CH-REP on the label", "MedDO", "before shipping"]);
+    todo.push(["Product information in German, French and Italian", "DE FR IT", $("s-label").checked ? "we check" : "check"]);
+    if ($("s-import").checked) todo.push(["Swiss importer, warehouse and distribution via partner", "Art. 46 IvDO", "partner"]);
+    return { tier, cls, fam, udi, todo };
+  }
+
+  function render() {
+    const q = scope();
+    $("tier").textContent = q.tier;
+    const box = document.getElementById("qlines")!;
+    box.replaceChildren(...q.todo.map(([t, , when]) => {
+      const row = document.createElement("div"); row.className = "qline";
+      const a = document.createElement("span"); a.textContent = t;
+      const b = document.createElement("span"); b.textContent = when;
+      if (when === "now" || when.startsWith("by")) b.classList.add("hot");
+      row.append(a, b); return row;
+    }));
+  }
+  form.addEventListener("input", render);
+  render();
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const err = document.getElementById("err")!; err.hidden = true;
+    const need = ["company", "country", "name", "email"].filter((id) => !$(id).value.trim());
+    const fail = (m: string, id?: string) => { err.textContent = m; err.hidden = false; if (id) $(id).focus(); };
+    if (need.length) return fail("Please fill in company, country, name and email.", need[0]);
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test($("email").value)) return fail("Please check the email address.", "email");
+    if (!$("consent").checked) return fail("Please confirm that we may store your details for this analysis.");
+    const q = scope();
+    const ref = "TR-" + new Date().getFullYear() + "-" + Math.random().toString(36).slice(2, 7).toUpperCase();
+    const payload: Record<string, unknown> = {
+      subject: `CH-REP analysis ${ref}: ${$("company").value}`,
+      ref, company: $("company").value, country: $("country").value, name: $("name").value, email: $("email").value,
+      situation: ($("situation") as unknown as HTMLSelectElement).value, classes: q.cls.join(", "),
+      product_families: q.fam, udi_dis: q.udi, package: q.tier,
+      services: ["label", "fees", "import", "3y"].filter((s) => $("s-" + s).checked).join(", "),
+      message: $("msg").value, todo: q.todo.map(([t, r, w]) => `${t} (${r}, ${w})`).join("\n"),
+    };
+    const endpoint = form.dataset.endpoint; const key = form.dataset.key;
+    if (key) payload.access_key = key;
+    const sent = document.getElementById("sent")!; const txt = document.getElementById("sentText")!;
+    if (!endpoint) { txt.textContent = `Preview: request ${ref} was prepared but not sent. Connect a form service to go live.`; sent.hidden = false; return; }
+    const btn = document.getElementById("send") as HTMLButtonElement; btn.disabled = true;
+    try {
+      const r = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(payload) });
+      if (!r.ok) throw new Error(String(r.status));
+      txt.textContent = `Thank you. Request ${ref} received. Your to-do list and personal offer follow by email within two working days.`;
+      sent.hidden = false; form.reset(); render();
+    } catch {
+      fail(`Your request could not be sent. Please email info@tellrep.ch and quote ${ref}.`);
+    } finally { btn.disabled = false; }
+  });
+</script>

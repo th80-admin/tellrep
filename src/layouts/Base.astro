@@ -1,0 +1,97 @@
+---
+import "../styles/global.css";
+import Logo from "../components/Logo.astro";
+interface Props { title?: string; description?: string }
+const {
+  title = "TellRep | Swiss Authorised Representative for IVD and medical devices",
+  description = "TellRep is your Swiss authorised representative (CH-REP) for in vitro diagnostics and medical devices. swissdamed registration, labelling, vigilance. Run by people from Swiss laboratory diagnostics.",
+} = Astro.props;
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <script is:inline>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap bar">
+      <a href="/" class="brand" aria-label="TellRep home"><Logo id="hd" height={28} /></a>
+      <nav aria-label="Main">
+        <a href="/#services">Services</a>
+        <a href="/#requirements">Swiss requirements</a>
+        <a href="/#insights">Insights</a>
+        <a href="/#about">About</a>
+      </nav>
+      <a class="btn btn-ink cta" href="/#analysis">Free CH-REP analysis</a>
+    </div>
+  </header>
+
+  <main id="top"><slot /></main>
+
+  <footer>
+    <div class="wrap foot">
+      <div class="fcol">
+        <Logo id="ft" tagline height={56} />
+        <p>For in vitro diagnostics and medical devices.</p>
+      </div>
+      <div class="fcol">
+        <span class="label">Contact</span>
+        <span class="mono">info@tellrep.ch</span>
+        <span>[Registered address follows on incorporation]</span>
+      </div>
+      <div class="fcol">
+        <span class="label">Legal</span>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacy">Privacy</a>
+      </div>
+      <div class="fcol">
+        <span class="label">Partner</span>
+        <span>Import, warehousing and distribution by TAmedics LabSolutions GmbH, Schlieren</span>
+      </div>
+    </div>
+    <div class="wrap fine">© {year} TellRep. Swiss authorised representative under Art. 44 IvDO and Art. 51 MedDO.</div>
+  </footer>
+
+  <script>
+    import "../scripts/motion.js";
+  </script>
+</body>
+</html>
+
+<style>
+  header.top {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+    background: color-mix(in srgb, var(--studio-50) 80%, transparent);
+    backdrop-filter: saturate(1.6) blur(14px); -webkit-backdrop-filter: saturate(1.6) blur(14px);
+    border-bottom: 1px solid transparent; transition: border-color .3s ease;
+  }
+  :global(.scrolled) header.top { border-bottom-color: var(--hairline); }
+  .bar { display: flex; align-items: center; gap: 28px; min-height: 68px; }
+  .brand { display: flex; text-decoration: none; }
+  nav { display: flex; gap: 26px; margin-left: auto; font-size: 14.5px; font-weight: 500; }
+  nav a { text-decoration: none; color: var(--slate); transition: color .2s; }
+  nav a:hover { color: var(--ink); }
+  .cta { padding: 11px 16px; font-size: 14px; }
+  @media (max-width: 880px) { nav { display: none; } .cta { margin-left: auto; } }
+
+  footer { border-top: 1px solid var(--hairline); padding-block: 64px 40px; color: var(--slate); font-size: 14.5px; background: var(--studio-0); }
+  .foot { display: grid; grid-template-columns: 1.4fr 1fr .7fr 1.2fr; gap: 32px; }
+  .fcol { display: grid; gap: 8px; align-content: start; }
+  .fcol a { text-decoration: none; } .fcol a:hover { color: var(--ink); }
+  .fcol .mono { color: var(--ink); font-size: 14px; }
+  .fine { margin-top: 48px; font-size: 12.5px; color: var(--mist); }
+  @media (max-width: 820px) { .foot { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .foot { grid-template-columns: 1fr; } }
+</style>

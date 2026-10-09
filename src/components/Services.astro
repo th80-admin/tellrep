@@ -1,0 +1,65 @@
+---
+const services = [
+  { t: "CH-REP mandate", d: "Written mandate, our name and Swiss address on your labelling, a qualified person responsible for regulatory compliance and your documents ready for Swissmedic.", r: ["Art. 44 IvDO", "Art. 51 MedDO"] },
+  { t: "swissdamed registration", d: "Mandate notification in the Actors module and registration of your devices in the UDI Devices module, kept up to date as your portfolio changes.", r: ["Art. 48 IvDO", "CHRN"] },
+  { t: "Label and IFU check", d: "CH-REP and importer details, symbols and language versions in German, French and Italian, checked before you print.", r: ["Art. 15 IvDO", "DE · FR · IT"] },
+  { t: "Vigilance and authority contact", d: "Serious incidents and field safety corrective actions reach Swissmedic on time. Complaints from Swiss users reach you without delay.", r: ["Art. 59 IvDO"] },
+  { t: "Document review", d: "Before we sign, we check your declaration of conformity, certificates and the structure of your technical documentation. If something is missing, you hear it from us first.", r: ["Art. 11 IVDR"] },
+];
+const facts = [
+  { n: "days", label: "until the swissdamed transition ends on 31 December 2026", live: true },
+  { n: "3", label: "official languages for Swiss product information" },
+  { n: "7", label: "days to hand technical documentation to Swissmedic on request" },
+  { n: "10", label: "years to keep declarations and certificates available" },
+];
+---
+<section class="band" id="services">
+  <div class="wrap">
+    <div class="head">
+      <span class="label" data-reveal>What TellRep does</span>
+      <h2 class="big" data-reveal>One Swiss contact for everything Swissmedic asks of you.</h2>
+      <p class="lead" data-reveal>We act as your CH-REP under a written mandate, keep your documents ready for the authority and make sure nothing reportable gets lost between Switzerland and your factory.</p>
+    </div>
+
+    <div class="facts">
+      {facts.map((f) => (
+        <div class="fact" data-reveal>
+          <strong class="num" data-count={f.live ? "days" : f.n}>{f.live ? "84" : f.n}</strong>
+          <span>{f.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="grid">
+      {services.map((s) => (
+        <article class="card" data-reveal>
+          <h3>{s.t}</h3>
+          <p>{s.d}</p>
+          <div class="refs">{s.r.map((r) => <span class="ref">{r}</span>)}</div>
+        </article>
+      ))}
+      <article class="card partner" data-reveal>
+        <h3>Import and distribution</h3>
+        <p>Need a Swiss importer, a warehouse or sales to laboratories, practices and pharmacies? Our partner TAmedics LabSolutions in Schlieren covers this as a separate company, so the regulatory role stays independent.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--hairline); border-radius: var(--r-lg); overflow: hidden; margin-bottom: 48px; box-shadow: var(--shadow-1); }
+  .fact { background: var(--studio-0); padding: 26px 24px; display: grid; gap: 8px; align-content: start; }
+  .num { font-family: var(--mono); font-weight: 400; font-size: clamp(40px, 4.4vw, 56px); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .fact:first-child .num { color: var(--red); }
+  .fact span { font-size: 14px; color: var(--slate); line-height: 1.45; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card { background: var(--studio-0); border-radius: var(--r-md); box-shadow: var(--shadow-1); padding: 26px; display: grid; gap: 10px; align-content: start; transition: box-shadow .3s ease, transform .3s ease; }
+  .card:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+  .card h3 { font-size: 19px; }
+  .card p { color: var(--slate); font-size: 15px; }
+  .refs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .partner { background: transparent; box-shadow: none; border: 1px dashed var(--hairline); }
+  .partner:hover { box-shadow: none; transform: none; }
+  @media (max-width: 920px) { .facts { grid-template-columns: 1fr 1fr; } .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .facts, .grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,48 @@
+---
+import { requirements, sources } from "../data/content.js";
+---
+<section class="band" id="requirements">
+  <div class="wrap">
+    <div class="head">
+      <span class="label" data-reveal>Swiss market access</span>
+      <h2 class="big" data-reveal>What a manufacturer must have in place to sell in Switzerland.</h2>
+      <p class="lead" data-reveal>Since 26 May 2021 for medical devices and 26 May 2022 for in vitro diagnostics, Switzerland is treated like a third country by the EU and has its own rules. Your CE marking stays valid. The Swiss layer comes on top.</p>
+    </div>
+    <ol class="steps">
+      {requirements.map((q, i) => (
+        <li data-reveal>
+          <span class="n mono">{String(i + 1).padStart(2, "0")}</span>
+          <div>
+            <h3>{q.t}</h3>
+            <p>{q.d}</p>
+            <div class="refs">{q.r.map((r) => <span class="ref">{r}</span>)}</div>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <div class="links">
+      <span class="label">Official sources</span>
+      <div class="lgrid">
+        {sources.map((s) => (
+          <a href={s.h} target="_blank" rel="noopener">{s.t}<span class="mono">{s.s} ↗</span></a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  li { background: var(--studio-0); border-radius: var(--r-md); box-shadow: var(--shadow-1); padding: 24px; display: grid; grid-template-columns: 40px 1fr; gap: 14px; }
+  li > div { display: grid; gap: 8px; min-width: 0; align-content: start; }
+  .n { color: var(--red); font-size: 14px; padding-top: 4px; }
+  h3 { font-size: 19px; line-height: 1.25; }
+  p { color: var(--slate); font-size: 15px; }
+  .refs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .links { margin-top: 40px; display: grid; gap: 14px; }
+  .lgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .lgrid a { display: flex; justify-content: space-between; gap: 12px; background: var(--studio-0); border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 14px 16px; text-decoration: none; font-size: 14.5px; font-weight: 500; transition: box-shadow .2s; }
+  .lgrid a:hover { box-shadow: var(--shadow-2); }
+  .lgrid .mono { font-size: 12px; color: var(--slate); white-space: nowrap; }
+  @media (max-width: 820px) { .steps, .lgrid { grid-template-columns: 1fr; } }
+</style>

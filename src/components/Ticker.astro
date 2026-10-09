@@ -1,0 +1,17 @@
+---
+const items = ["Art. 44 IvDO", "Art. 51 MedDO", "swissdamed", "CHRN", "Art. 15 IvDO labelling", "PRRC", "Art. 59 IvDO vigilance", "DE · FR · IT", "IVDR 2017/746", "MDR 2017/745", "Art. 82 IvDO transition", "UDI-DI"];
+const row = [...items, ...items];
+---
+<div class="ticker" aria-hidden="true">
+  <div class="track">
+    {row.map((t) => (<span class="it"><i></i>{t}</span>))}
+  </div>
+</div>
+<style>
+  .ticker { overflow: hidden; border-block: 1px solid var(--hairline); background: var(--studio-0); padding-block: 16px; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .track { display: flex; gap: 40px; width: max-content; animation: run 48s linear infinite; }
+  .it { display: inline-flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 13.5px; color: var(--slate); white-space: nowrap; }
+  .it i { width: 6px; height: 6px; border-radius: 50%; background: var(--red); opacity: .8; }
+  @keyframes run { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .track { animation: none; } }
+</style>

@@ -1,0 +1,52 @@
+---
+import { insights } from "../data/content.js";
+---
+<section class="band ins" id="insights">
+  <div class="wrap">
+    <div class="head">
+      <span class="label" data-reveal>Insights</span>
+      <h2 class="big" data-reveal>Short reads for manufacturers new to Switzerland.</h2>
+    </div>
+    <div class="cards">
+      {insights.map((a) => (
+        <a class="card" href={`/insights/${a.slug}`} data-reveal>
+          <span class="label">{a.tag}</span>
+          <h3>{a.title}</h3>
+          <p>{a.teaser}</p>
+          <span class="more">Read <span aria-hidden="true">→</span></span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="band about" id="about">
+  <div class="wrap agrid">
+    <div class="head" style="margin-bottom:0">
+      <span class="label" data-reveal>About</span>
+      <h2 class="big" data-reveal>A representative who has stood in Swiss laboratories.</h2>
+      <p class="lead" data-reveal>TellRep is led by Tim Hartkorn. Before founding TellRep he ran service organisations for two of the best known names in Swiss laboratory diagnostics and acted as Quality Authorized Representative. He knows the users your devices are made for, in all language regions.</p>
+    </div>
+    <div class="cv" data-reveal>
+      <div><b class="mono">Nova Biomedical</b><span>Technical Support Manager, Quality Authorized Representative, Safety Officer, Swiss management team</span></div>
+      <div><b class="mono">Sysmex Suisse</b><span>Service Manager, 2012 to 2021</span></div>
+      <div><b class="mono">Certified</b><span>Quality Management Specialist and Quality Management Representative (TÜV SÜD)</span></div>
+      <div><b class="mono">Languages</b><span>German, English, Italian</span></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ins { background: var(--studio-0); border-block: 1px solid var(--hairline); }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card { text-decoration: none; background: var(--studio-50); border-radius: var(--r-lg); padding: 28px; display: grid; gap: 12px; align-content: start; min-height: 220px; transition: box-shadow .3s, transform .3s, background .3s; }
+  .card:hover { background: var(--studio-0); box-shadow: var(--shadow-3); transform: translateY(-3px); }
+  .card h3 { font-size: 22px; line-height: 1.2; }
+  .card p { color: var(--slate); font-size: 15px; }
+  .more { margin-top: auto; font-weight: 600; font-size: 14px; color: var(--red); }
+  .agrid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: start; }
+  .cv { display: grid; gap: 14px; padding-top: 30px; }
+  .cv div { display: grid; grid-template-columns: 140px 1fr; gap: 16px; font-size: 15px; border-top: 1px solid var(--hairline); padding-top: 14px; }
+  .cv b { font-weight: 500; font-size: 13px; color: var(--slate); }
+  @media (max-width: 860px) { .cards, .agrid { grid-template-columns: 1fr; } .cv div { grid-template-columns: 1fr; gap: 2px; } }
+</style>

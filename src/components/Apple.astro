@@ -1,0 +1,33 @@
+---
+interface Props { id?: string; size?: number; class?: string; leaf?: boolean }
+const { id = "a", size = 120, class: cls = "", leaf = true } = Astro.props;
+const body = "M12 7.2 C9.4 5.3 4.6 6.1 4.6 11.3 C4.6 16.4 8.2 21.2 10.9 20.7 C11.6 20.6 12 20.3 12 20.3 C12 20.3 12.4 20.6 13.1 20.7 C15.8 21.2 19.4 16.4 19.4 11.3 C19.4 6.1 14.6 5.3 12 7.2 Z";
+---
+<svg class={`apple ${cls}`} viewBox="2.5 1.2 19 21" width={size} height={size * 1.1} aria-hidden="true">
+  <defs>
+    <radialGradient id={`${id}-body`} cx="0.36" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#F45A70" />
+      <stop offset="0.42" stop-color="#C8102E" />
+      <stop offset="1" stop-color="#6E0819" />
+    </radialGradient>
+    <radialGradient id={`${id}-shade`} cx="0.55" cy="1" r="0.62">
+      <stop offset="0" stop-color="#3D0410" stop-opacity="0.5" />
+      <stop offset="1" stop-color="#3D0410" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id={`${id}-rim`} x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.35" />
+      <stop offset="0.35" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id={`${id}-leaf`} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5A6570" />
+      <stop offset="1" stop-color="#161B20" />
+    </linearGradient>
+  </defs>
+  <path d={body} fill={`url(#${id}-body)`} />
+  <path d={body} fill={`url(#${id}-shade)`} />
+  <path d={body} fill="none" stroke={`url(#${id}-rim)`} stroke-width="0.5" />
+  <ellipse cx="8.4" cy="9.6" rx="1.7" ry="2.7" transform="rotate(28 8.4 9.6)" fill="#fff" opacity="0.6" />
+  <ellipse cx="8.1" cy="13.6" rx="0.6" ry="1.1" transform="rotate(10 8.1 13.6)" fill="#fff" opacity="0.25" />
+  <path d="M12 7.4 C12 5.6 12.5 4.2 13.6 3.1" fill="none" stroke="#161B20" stroke-width="1.1" stroke-linecap="round" />
+  {leaf && <path d="M13.1 4.6 C14.6 2.6 17.4 2.3 18.6 3.0 C17.6 4.9 15.2 5.9 13.1 4.6 Z" fill={`url(#${id}-leaf)`} />}
+</svg>

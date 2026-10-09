@@ -1,0 +1,83 @@
+---
+// A product-style mock of a swissdamed mandate and device registration, filled in as it scrolls into view.
+const rows = [
+  { k: "Manufacturer", v: "Example Diagnostics Co., Ltd." },
+  { k: "Country", v: "People's Republic of China" },
+  { k: "Swiss authorised representative", v: "TellRep" },
+  { k: "Mandate", v: "Notified in Actors module" },
+];
+---
+<section class="registry" aria-label="Example of a swissdamed registration handled by TellRep">
+  <div class="wrap">
+    <div class="window" data-registry>
+      <div class="chrome">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="title mono">swissdamed · UDI Devices module</span>
+        <span class="tag">Example</span>
+      </div>
+      <div class="body">
+        <div class="side">
+          <span class="label">Mandate</span>
+          <a class="on">Overview</a>
+          <a>Devices</a>
+          <a>Documents</a>
+          <a>Vigilance</a>
+          <span class="label" style="margin-top:14px">Status</span>
+          <span class="pill" data-status>Draft</span>
+        </div>
+        <div class="main">
+          <div class="rows">
+            {rows.map((r) => (
+              <div class="row">
+                <span class="k">{r.k}</span>
+                <span class="v" data-type={r.v}>{r.v}</span>
+              </div>
+            ))}
+          </div>
+          <div class="prog">
+            <div class="ptop"><span>UDI-DIs registered</span><span class="mono"><b data-count="30">30</b> / 30</span></div>
+            <div class="track"><span class="fill" data-fill></span></div>
+          </div>
+          <div class="done" data-done>
+            <span class="tick">✓</span>
+            <span>Ready to place on the Swiss market</span>
+            <span class="mono date">before 31 Dec 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .registry { padding-block: 0 clamp(40px, 6vw, 72px); margin-top: -20px; }
+  .window { max-width: 900px; margin: 0 auto; background: var(--studio-0); border-radius: var(--r-lg); box-shadow: var(--shadow-3); overflow: hidden; border: 1px solid rgba(22, 27, 32, 0.05); }
+  .chrome { display: flex; align-items: center; gap: 14px; padding: 13px 18px; border-bottom: 1px solid var(--hairline); background: linear-gradient(var(--studio-0), var(--studio-50)); }
+  .dots { display: flex; gap: 6px; } .dots i { width: 11px; height: 11px; border-radius: 50%; background: var(--studio-100); border: 1px solid var(--hairline); }
+  .title { font-size: 13px; color: var(--slate); }
+  .tag { margin-left: auto; font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--mist); }
+  .body { display: grid; grid-template-columns: 190px 1fr; min-height: 300px; }
+  .side { border-right: 1px solid var(--hairline); padding: 20px 16px; display: grid; gap: 4px; align-content: start; background: var(--studio-50); font-size: 14px; }
+  .side a { padding: 7px 10px; border-radius: 8px; color: var(--slate); }
+  .side a.on { background: var(--studio-0); color: var(--ink); box-shadow: var(--shadow-1); font-weight: 500; }
+  .pill { justify-self: start; font-family: var(--mono); font-size: 12px; padding: 4px 10px; border-radius: 999px; background: var(--studio-100); color: var(--slate); transition: background .4s, color .4s; }
+  .pill.ok { background: #e3f2ea; color: #1e7a4f; }
+  .main { padding: 24px 28px; display: grid; gap: 22px; align-content: start; min-width: 0; }
+  .rows { display: grid; }
+  .row { display: grid; grid-template-columns: 220px 1fr; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--hairline); font-size: 15px; }
+  .k { color: var(--slate); font-size: 14px; }
+  .v { font-weight: 500; min-height: 1.4em; }
+  .row:nth-child(3) .v { color: var(--red); }
+  .prog { display: grid; gap: 8px; }
+  .ptop { display: flex; justify-content: space-between; font-size: 14px; color: var(--slate); }
+  .ptop b { color: var(--ink); font-weight: 500; }
+  .track { height: 8px; border-radius: 99px; background: var(--studio-100); overflow: hidden; }
+  .fill { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #e2384f, var(--red)); border-radius: inherit; transform-origin: left; }
+  .done { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; background: var(--glass); border-radius: var(--r-md); padding: 14px 16px; font-size: 15px; font-weight: 500; }
+  .tick { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: #fff; font-size: 13px; }
+  .date { margin-left: auto; font-size: 12.5px; color: var(--slate); font-weight: 400; }
+  @media (max-width: 720px) {
+    .body { grid-template-columns: 1fr; } .side { display: none; }
+    .row { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>

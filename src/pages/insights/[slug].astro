@@ -1,0 +1,51 @@
+---
+import Base from "../../layouts/Base.astro";
+import { insights } from "../../data/content.js";
+export function getStaticPaths() {
+  return insights.map((a) => ({ params: { slug: a.slug }, props: { a } }));
+}
+const { a } = Astro.props;
+const others = insights.filter((x) => x.slug !== a.slug);
+---
+<Base title={`${a.title} | TellRep Insights`} description={a.teaser}>
+  <article class="wrap art">
+    <a class="back" href="/#insights">← All insights</a>
+    <span class="label">{a.tag}</span>
+    <h1>{a.title}</h1>
+    <p class="lead">{a.teaser}</p>
+    <div class="body" set:html={a.body} />
+    <p class="srcline mono">Sources: {a.sources}. Status October 2026. Not legal advice.</p>
+    <div class="cta">
+      <div><h3>Not sure what applies to your devices?</h3><p>Get a free CH-REP analysis with your personal Swiss to-do list.</p></div>
+      <a class="btn btn-red" href="/#analysis">Free analysis</a>
+    </div>
+    <div class="more">
+      {others.map((o) => (<a href={`/insights/${o.slug}`}><span class="label">{o.tag}</span><b>{o.title}</b></a>))}
+    </div>
+  </article>
+</Base>
+
+<style>
+  .art { max-width: 780px; padding-block: clamp(48px, 7vw, 96px); display: grid; gap: 18px; }
+  .back { font-size: 14px; color: var(--slate); text-decoration: none; }
+  h1 { font-size: clamp(36px, 5vw, 56px); line-height: 1.04; letter-spacing: -0.03em; }
+  .body { display: grid; gap: 18px; margin-top: 12px; font-size: 17px; line-height: 1.65; }
+  .body :global(h3) { font-size: 22px; margin-top: 12px; }
+  .body :global(.facts3) { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .body :global(.facts3 div) { background: var(--studio-0); border-radius: var(--r-md); box-shadow: var(--shadow-1); padding: 18px; display: grid; gap: 4px; }
+  .body :global(.facts3 strong) { font-family: var(--display); font-size: 28px; letter-spacing: -0.02em; }
+  .body :global(.facts3 span) { font-size: 14px; color: var(--slate); line-height: 1.4; }
+  .body :global(.tbl) { overflow-x: auto; background: var(--studio-0); border-radius: var(--r-md); box-shadow: var(--shadow-1); }
+  .body :global(table) { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.4; }
+  .body :global(th), .body :global(td) { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+  .body :global(th) { font-weight: 600; background: var(--studio-50); }
+  .body :global(tr:last-child td) { border-bottom: 0; }
+  .body :global(.num) { font-family: var(--mono); font-size: 13.5px; white-space: nowrap; }
+  .body :global(.src) { font-size: 14px; color: var(--slate); }
+  .srcline { font-size: 12.5px; color: var(--slate); border-top: 1px solid var(--hairline); padding-top: 14px; margin-top: 10px; }
+  .cta { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; background: var(--studio-0); border-radius: var(--r-lg); box-shadow: var(--shadow-2); padding: 26px; margin-top: 14px; }
+  .cta p { color: var(--slate); }
+  .more { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+  .more a { text-decoration: none; display: grid; gap: 6px; background: var(--studio-50); border: 1px solid var(--hairline); border-radius: var(--r-md); padding: 18px; }
+  @media (max-width: 640px) { .body :global(.facts3), .more { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,105 @@
+---
+const steps = [
+  { n: "01", t: "Your device is CE marked.", d: "Conformity under the IVDR or MDR, a declaration of conformity and, where required, a notified body certificate. That gets you into the EU. Not into Switzerland." },
+  { n: "02", t: "Switzerland asks for one more line.", d: "Since 26 May 2022 every manufacturer without a Swiss office needs a Swiss authorised representative, named next to the CH-REP symbol." },
+  { n: "03", t: "We take that line.", d: "Our name and Swiss address on your label or accompanying document. Behind it: a written mandate, a qualified person and your documents within reach of Swissmedic." },
+  { n: "04", t: "Registered. Ready to ship.", d: "Mandate notified, devices registered in swissdamed. Your Swiss distributor can sell, and you can sleep." },
+];
+---
+<section class="story" id="how" data-story>
+  <div class="wrap grid">
+    <div class="texts">
+      <span class="label">How it works</span>
+      {steps.map((s, i) => (
+        <div class="step" data-step={i}>
+          <span class="n mono">{s.n}</span>
+          <h3>{s.t}</h3>
+          <p>{s.d}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="visual">
+      <div class="box">
+        <div class="lab">
+          <div class="lrow top">
+            <div class="mfr">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 21V10l5 3V10l5 3V5h8v16z" fill="#161B20"/></svg>
+              <div><b>Example Diagnostics Co., Ltd.</b><br /><span>Hangzhou, China</span></div>
+            </div>
+            <span class="ce">CE <small>0123</small></span>
+          </div>
+          <h4>hs-cTnI Rapid Test Kit</h4>
+          <span class="sub">Fluorescence immunoassay · 25 tests</span>
+          <div class="sym">
+            <span class="sbox">IVD</span>
+            <span class="kv"><i>REF</i> FIA-TNI-25</span>
+            <span class="kv"><i>LOT</i> 2610A04</span>
+            <span class="kv"><i>⌛</i> 2028-04</span>
+            <span class="kv"><i>2°C</i>30°C</span>
+          </div>
+          <div class="ec"><span class="sbox">EC REP</span> EU Rep GmbH, Musterstrasse 1, Berlin, DE</div>
+          <div class="slot">
+            <div class="missing" data-layer="missing"><span>CH-REP</span> missing</div>
+            <div class="chrep" data-layer="chrep"><span class="sbox red">CH REP</span> <b>TellRep</b>, [Swiss address]</div>
+          </div>
+          <div class="langs"><span>DE</span><span>FR</span><span>IT</span><span>EN</span></div>
+        </div>
+        <div class="stamp" data-layer="stamp">
+          <span class="mono">swissdamed</span>
+          <b>REGISTERED</b>
+          <span class="mono">UDI-DI 30 / 30</span>
+        </div>
+      </div>
+      <div class="shadow"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .story { padding-block: clamp(70px, 9vw, 120px); background: var(--studio-0); border-block: 1px solid var(--hairline); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .texts { display: grid; gap: 30px; position: relative; }
+  .step { display: grid; gap: 8px; max-width: 46ch; }
+  .n { font-size: 13px; color: var(--red); }
+  .step h3 { font-size: clamp(24px, 2.6vw, 32px); line-height: 1.12; }
+  .step p { color: var(--slate); }
+
+  .visual { position: relative; display: grid; place-items: center; padding-block: 30px; }
+  .box { position: relative; width: min(420px, 100%); aspect-ratio: 5 / 4.2; background: linear-gradient(160deg, #ffffff, #f3f4f6); border-radius: 18px; box-shadow: var(--shadow-3); padding: 22px; transform: rotate(-2deg); }
+  .lab { height: 100%; background: #fff; border: 1px solid var(--hairline); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; align-content: start; font-size: 12.5px; }
+  .lrow { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .mfr { display: flex; gap: 8px; align-items: flex-start; line-height: 1.3; }
+  .mfr span { color: var(--slate); }
+  .ce { font-family: var(--display); font-weight: 700; font-size: 22px; line-height: 1; letter-spacing: -0.03em; }
+  .ce small { font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: 0; }
+  h4 { font-size: 18px; margin-top: 4px; }
+  .sub { color: var(--slate); }
+  .sym { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; font-family: var(--mono); font-size: 11.5px; }
+  .kv i { font-style: normal; border: 1px solid var(--ink); border-radius: 3px; padding: 0 3px; margin-right: 3px; font-size: 10px; }
+  .sbox { display: inline-block; border: 1.4px solid var(--ink); border-radius: 3px; padding: 1px 5px; font-family: var(--mono); font-size: 10.5px; font-weight: 500; line-height: 1.3; }
+  .sbox.red { border-color: var(--red); color: var(--red); }
+  .ec { font-size: 11.5px; color: var(--slate); }
+  .slot { position: relative; min-height: 34px; display: grid; }
+  .missing, .chrep { grid-area: 1 / 1; display: flex; align-items: center; gap: 8px; border-radius: 6px; padding: 7px 10px; font-size: 12px; }
+  .missing { border: 1.5px dashed var(--red); color: var(--red); background: var(--red-tint); font-weight: 500; }
+  .missing span { font-family: var(--mono); }
+  .chrep { background: #fff; border: 1px solid var(--hairline); box-shadow: 0 6px 18px rgba(200, 16, 46, 0.12); }
+  .langs { display: flex; gap: 6px; margin-top: 2px; }
+  .langs span { font-family: var(--mono); font-size: 10.5px; color: var(--slate); border: 1px solid var(--hairline); border-radius: 3px; padding: 0 5px; }
+  .stamp { position: absolute; right: -18px; bottom: 26px; display: grid; justify-items: center; gap: 2px; padding: 12px 16px; border: 2.5px solid var(--red); border-radius: 12px; color: var(--red); background: rgba(255,255,255,0.86); transform: rotate(-9deg); box-shadow: var(--shadow-2); backdrop-filter: blur(3px); }
+  .stamp b { font-family: var(--display); font-size: 20px; letter-spacing: 0.06em; }
+  .stamp .mono { font-size: 11px; }
+  .shadow { width: 70%; height: 30px; margin-top: 18px; border-radius: 50%; background: radial-gradient(closest-side, rgba(22,27,32,.14), transparent); }
+
+  /* without JS: final state */
+  .missing { opacity: 0; }
+  :global(.js) .story[data-pinned] .missing { opacity: 1; }
+  :global(.js) .story[data-pinned] .chrep, :global(.js) .story[data-pinned] .stamp { opacity: 0; }
+
+  @media (min-width: 900px) {
+    :global(.js) .story[data-pinned] .texts { display: block; min-height: 240px; }
+    :global(.js) .story[data-pinned] .step { position: absolute; top: 36px; left: 0; opacity: 0; }
+  }
+  @media (max-width: 899px) { .grid { grid-template-columns: 1fr; } .visual { order: -1; } }
+</style>
