@@ -1,0 +1,71 @@
+---
+import Article from "../../layouts/Article.astro";
+import { chrepFaq, faqSchema, countries } from "../../data/seo.js";
+const related = [
+  { href: "/swissdamed-registration/", label: "swissdamed registration", tag: "Guide" },
+  ...countries.map((c) => ({ href: `/ch-rep/${c.slug}/`, label: c.title, tag: "By origin" })),
+];
+---
+<Article
+  title="CH-REP: Swiss Authorised Representative Explained | TellRep"
+  description="What a CH-REP is, who needs one, what the Swiss authorised representative must do under MedDO and IvDO, labelling, swissdamed and how to choose the right CH-REP."
+  eyebrow="CH-REP guide"
+  h1="CH-REP: the Swiss authorised representative explained"
+  lead="Every manufacturer of medical devices or in vitro diagnostics without a registered office in Switzerland needs a CH-REP before selling here. This guide explains the role, the duties and what to look for when you choose one."
+  crumbs={[["Home", "/"], ["CH-REP", "/ch-rep/"]]}
+  schema={[faqSchema(chrepFaq)]}
+  note="Sources: MedDO (SR 812.213), IvDO (SR 812.219), Swissmedic information on the Swiss authorised representative and swissdamed. Status October 2026. Not legal advice."
+  related={related}
+>
+  <div class="facts3">
+    <div><strong>Art. 51</strong><span>MedDO: CH-REP for medical devices</span></div>
+    <div><strong>Art. 44</strong><span>IvDO: CH-REP for in vitro diagnostics</span></div>
+    <div><strong>7 days</strong><span>to hand technical documentation to Swissmedic on request</span></div>
+  </div>
+
+  <h2>What is a CH-REP?</h2>
+  <p>CH-REP stands for <strong>Swiss authorised representative</strong>, also written Swiss authorized representative or CH REP. It is the legal person in Switzerland that a foreign manufacturer appoints in writing to act on its behalf towards Swissmedic. The role mirrors the EU authorised representative, but it is a separate appointment under Swiss law: Art. 51 of the Medical Devices Ordinance (MedDO) and Art. 44 of the In Vitro Diagnostic Medical Devices Ordinance (IvDO).</p>
+  <p>Switzerland introduced the requirement when the Mutual Recognition Agreement with the EU was not updated for the MDR (26 May 2021) and the IVDR (26 May 2022). The transitional periods for appointing a CH-REP have expired. Devices placed on the Swiss market today need one.</p>
+
+  <h2>Who needs a CH-REP?</h2>
+  <ul>
+    <li>Every manufacturer without a registered office in Switzerland, including manufacturers based in the EU or EEA.</li>
+    <li>Manufacturers of medical devices, in vitro diagnostics, systems and procedure packs.</li>
+    <li>The mandate covers at least all devices of one generic device group.</li>
+  </ul>
+  <p>An EU authorised representative does not cover Switzerland, and neither does a registered office in an EU member state.</p>
+
+  <h2>What a CH-REP must do</h2>
+  <ul>
+    <li>Keep the technical documentation available, or ensure by contract that it reaches Swissmedic within seven days on request.</li>
+    <li>Keep the declaration of conformity and certificates available for ten years after the last device was placed on the market.</li>
+    <li>Have a <strong>person responsible for regulatory compliance</strong> (PRRC) permanently available.</li>
+    <li>Register in the swissdamed Actors module and obtain a Swiss Single Registration Number (CHRN).</li>
+    <li>Cooperate with Swissmedic on vigilance, serious incidents and field safety corrective actions.</li>
+    <li>Forward complaints and reports from Swiss users to the manufacturer without delay.</li>
+    <li>End the mandate if the manufacturer acts contrary to its obligations, and inform Swissmedic.</li>
+  </ul>
+  <p>Like its EU counterpart, the CH-REP shares legal responsibility with the manufacturer. That is why a serious CH-REP reviews your documentation before signing.</p>
+
+  <h2>CH-REP on the label</h2>
+  <p>The CH-REP's name and address appear next to the CH-REP symbol or the words "CH-REP". For IVDs that are not intended for self-testing this can be on the label, the outer packaging or an accompanying document. For self-tests it must be on the label. The importer's details are added on the device, its packaging or an accompanying document. Product information is generally required in German, French and Italian.</p>
+
+  <h2>CH-REP and swissdamed</h2>
+  <p>Since 1 July 2026 devices are registered in the swissdamed UDI Devices module, which replaced the earlier notifications. Devices already on the market have a transition period until <strong>31 December 2026</strong>. Either the manufacturer or its CH-REP can register devices. Swissmedic charges CHF 200 for the first UDI-DI and CHF 20 for each further one, capped at CHF 10,000 per year. <a href="/swissdamed-registration/">Read the swissdamed guide</a>.</p>
+
+  <h2>How to choose a CH-REP</h2>
+  <ul>
+    <li><strong>Qualified PRRC.</strong> Ask who the person responsible for regulatory compliance is and how they can be reached.</li>
+    <li><strong>Knowledge of your devices.</strong> A CH-REP who knows laboratories and their analysers handles complaints and vigilance faster.</li>
+    <li><strong>Independence.</strong> A CH-REP that is not your distributor stays in place when your sales partners change.</li>
+    <li><strong>Document handling.</strong> Ask how your technical documentation is stored, versioned and handed to Swissmedic.</li>
+    <li><strong>Languages.</strong> Swiss users write in German, French or Italian. Your CH-REP should understand them.</li>
+    <li><strong>Clear contract.</strong> Scope by generic device group, response times, termination and handover.</li>
+  </ul>
+
+  <h2>What drives the cost of a CH-REP</h2>
+  <p>Prices depend on the number of generic device groups and UDI-DIs, the risk classes, the state of the documentation and the services you add, such as label checks, storage or the importer role. Swissmedic registration fees come on top. TellRep sends a written offer after a short review of your documents.</p>
+
+  <h2>Frequently asked questions</h2>
+  {chrepFaq.map((f) => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+</Article>

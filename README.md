@@ -42,6 +42,14 @@ Any static host works. Two options:
 * **Infomaniak** (Swiss hosting): `npm run build`, upload `dist/` to the web space.
 * **Vercel or Netlify**: import the repository, framework preset Astro, add the two environment variables.
 
+## SEO
+
+* Landing pages: `/ch-rep/` (pillar guide with FAQ), `/swissdamed-registration/`, `/ch-rep/{china,korea,india,turkiye,eu-manufacturers}/` (data in `src/data/seo.js`)
+* Structured data: Organization and ProfessionalService on every page, WebSite on home, FAQPage, BreadcrumbList, Article
+* `sitemap-index.xml` (generated), `robots.txt`, canonical URLs, Open Graph image `public/og.png`
+* Fonts are self hosted (no Google Fonts request)
+* After go live: verify the domain in Google Search Console and Bing Webmaster Tools, submit the sitemap, add the registered address to `org` in `seo.js`
+
 ## Before go live
 
 - [ ] Register tellrep.ch and point DNS to the host

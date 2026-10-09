@@ -1,0 +1,41 @@
+---
+import Article from "../../layouts/Article.astro";
+import { countries, faqSchema, chrepFaq } from "../../data/seo.js";
+export function getStaticPaths() {
+  return countries.map((c) => ({ params: { country: c.slug }, props: { c } }));
+}
+const { c } = Astro.props;
+const faq = [chrepFaq[0], chrepFaq[2], chrepFaq[5], chrepFaq[7]].filter((f, i) => c.slug === "eu-manufacturers" || i !== 1);
+const related = [
+  { href: "/ch-rep/", label: "CH-REP guide", tag: "Guide" },
+  { href: "/swissdamed-registration/", label: "swissdamed registration", tag: "Guide" },
+  ...countries.filter((x) => x.slug !== c.slug).map((x) => ({ href: `/ch-rep/${x.slug}/`, label: x.title, tag: "By origin" })),
+];
+---
+<Article
+  title={`${c.title} | TellRep`}
+  description={`Swiss authorised representative (CH-REP) for ${c.adj} manufacturers of IVDs and medical devices: mandate, swissdamed registration, labelling and vigilance in Switzerland.`}
+  eyebrow="CH-REP by origin"
+  h1={c.title}
+  lead={c.lead}
+  crumbs={[["Home", "/"], ["CH-REP", "/ch-rep/"], [c.name.replace(/^the /, ""), `/ch-rep/${c.slug}/`]]}
+  schema={[faqSchema(faq)]}
+  related={related}
+>
+  <h2>What {c.adj} manufacturers need for Switzerland</h2>
+  <ol>
+    <li>A written mandate with a Swiss authorised representative (Art. 44 IvDO, Art. 51 MedDO).</li>
+    <li>Registration of the CH-REP in swissdamed and notification of the mandate.</li>
+    <li>Device registration in the swissdamed UDI Devices module, for devices already on the market by 31 December 2026.</li>
+    <li>The CH-REP's name and address on the label or accompanying document, plus the importer's details.</li>
+    <li>Product information in German, French and Italian, unless reduced languages are permitted.</li>
+  </ol>
+
+  <h2>How TellRep works with {c.adj} manufacturers</h2>
+  <div class="points">
+    {c.points.map(([t, d]) => (<div><b>{t}</b><p>{d}</p></div>))}
+  </div>
+
+  <h2>Questions we hear often</h2>
+  {faq.map((f) => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+</Article>

@@ -9,7 +9,7 @@ import { insights } from "../data/content.js";
     </div>
     <div class="cards">
       {insights.map((a) => (
-        <a class="card" href={`/insights/${a.slug}`} data-reveal>
+        <a class="card" href={`/insights/${a.slug}/`} data-reveal>
           <span class="label">{a.tag}</span>
           <h3>{a.title}</h3>
           <p>{a.teaser}</p>

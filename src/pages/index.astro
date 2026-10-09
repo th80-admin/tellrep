@@ -10,7 +10,7 @@ import Requirements from "../components/Requirements.astro";
 import InsightsAbout from "../components/InsightsAbout.astro";
 import Analysis from "../components/Analysis.astro";
 ---
-<Base>
+<Base schema={[{ "@type": "WebSite", "@id": "https://tellrep.ch/#website", url: "https://tellrep.ch/", name: "TellRep", publisher: { "@id": "https://tellrep.ch/#org" }, inLanguage: "en" }]}>
   <Hero />
   <Registry />
   <Ticker />

@@ -1,11 +1,27 @@
 ---
+import "@fontsource/schibsted-grotesk/500.css";
+import "@fontsource/schibsted-grotesk/600.css";
+import "@fontsource/schibsted-grotesk/700.css";
+import "@fontsource/instrument-sans/400.css";
+import "@fontsource/instrument-sans/500.css";
+import "@fontsource/instrument-sans/600.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
 import "../styles/global.css";
 import Logo from "../components/Logo.astro";
-interface Props { title?: string; description?: string }
+import { org } from "../data/seo.js";
+interface Props { title?: string; description?: string; schema?: object[]; type?: string; noindex?: boolean }
 const {
-  title = "TellRep | Swiss Authorised Representative for IVD and medical devices",
-  description = "TellRep is your Swiss authorised representative (CH-REP) for in vitro diagnostics and medical devices. swissdamed registration, labelling, vigilance. Run by people from Swiss laboratory diagnostics.",
+  title = "CH-REP Switzerland for IVD and Medical Devices | TellRep",
+  description = "TellRep is your CH-REP, the Swiss authorised representative for IVDs and medical devices: mandate, swissdamed registration, labelling and vigilance.",
+  schema = [],
+  type = "website",
+  noindex = false,
 } = Astro.props;
+const path = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : Astro.url.pathname + "/";
+const canonical = new URL(path, Astro.site).href;
+const ogImage = new URL("/og.png", Astro.site).href;
+const graph = { "@context": "https://schema.org", "@graph": [org, ...schema] };
 const year = new Date().getFullYear();
 ---
 <!doctype html>
@@ -15,13 +31,25 @@ const year = new Date().getFullYear();
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex" />}
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:site_name" content="TellRep" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:type" content="website" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <meta property="og:type" content={type} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+  <script type="application/ld+json" set:html={JSON.stringify(graph)} />
   <script is:inline>document.documentElement.classList.add("js")</script>
 </head>
 <body>
@@ -30,7 +58,7 @@ const year = new Date().getFullYear();
       <a href="/" class="brand" aria-label="TellRep home"><Logo id="hd" height={28} /></a>
       <nav aria-label="Main">
         <a href="/#services">Services</a>
-        <a href="/#requirements">Swiss requirements</a>
+        <a href="/ch-rep/">CH-REP guide</a>
         <a href="/#insights">Insights</a>
         <a href="/#about">About</a>
       </nav>
@@ -52,9 +80,23 @@ const year = new Date().getFullYear();
         <span>[Registered address follows on incorporation]</span>
       </div>
       <div class="fcol">
+        <span class="label">Guides</span>
+        <a href="/ch-rep/">What is a CH-REP?</a>
+        <a href="/swissdamed-registration/">swissdamed registration</a>
+        <a href="/#requirements">Swiss market access</a>
+      </div>
+      <div class="fcol">
+        <span class="label">CH-REP for</span>
+        <a href="/ch-rep/china/">China</a>
+        <a href="/ch-rep/korea/">Korea</a>
+        <a href="/ch-rep/india/">India</a>
+        <a href="/ch-rep/turkiye/">Türkiye</a>
+        <a href="/ch-rep/eu-manufacturers/">EU manufacturers</a>
+      </div>
+      <div class="fcol">
         <span class="label">Legal</span>
-        <a href="/imprint">Imprint</a>
-        <a href="/privacy">Privacy</a>
+        <a href="/imprint/">Imprint</a>
+        <a href="/privacy/">Privacy</a>
       </div>
     </div>
     <div class="wrap fine">© {year} TellRep. Swiss authorised representative under Art. 44 IvDO and Art. 51 MedDO.</div>
@@ -81,7 +123,7 @@ const year = new Date().getFullYear();
   @media (max-width: 880px) { nav { display: none; } .cta { margin-left: auto; } }
 
   footer { border-top: 1px solid var(--hairline); padding-block: 64px 40px; color: var(--slate); font-size: 14.5px; background: var(--studio-0); }
-  .foot { display: grid; grid-template-columns: 1.6fr 1.2fr 1fr; gap: 32px; }
+  .foot { display: grid; grid-template-columns: 1.5fr 1.1fr 1fr .8fr .7fr; gap: 32px; }
   .fcol { display: grid; gap: 8px; align-content: start; }
   .fcol a { text-decoration: none; } .fcol a:hover { color: var(--ink); }
   .fcol .mono { color: var(--ink); font-size: 14px; }
