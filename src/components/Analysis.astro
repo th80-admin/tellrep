@@ -50,7 +50,7 @@ const preset = ["IVD-B", "IVD-C"];
           <label class="opt"><input type="checkbox" id="s-rep" checked disabled /><span><b>CH-REP mandate</b><small>Mandate, document review, swissdamed registration, PRRC, annual review</small></span><em>core</em></label>
           <label class="opt"><input type="checkbox" id="s-label" /><span><b>Label and IFU check DE · FR · IT</b><small>Swiss labelling details and language versions, per product family</small></span><em>add-on</em></label>
           <label class="opt"><input type="checkbox" id="s-fees" checked /><span><b>Handle Swissmedic registration fees</b><small>We pay the swissdamed fees to Swissmedic and pass them on at cost</small></span><em>add-on</em></label>
-          <label class="opt"><input type="checkbox" id="s-import" /><span><b>Import, warehousing and distribution</b><small>Through our partner TAmedics LabSolutions, offered separately</small></span><em>partner</em></label>
+          <label class="opt"><input type="checkbox" id="s-import" /><span><b>Importer and distributor check</b><small>Roles, labelling and complaint handling of your Swiss partners</small></span><em>add-on</em></label>
           <label class="opt"><input type="checkbox" id="s-3y" /><span><b>Three year commitment</b><small>Better terms for a longer mandate</small></span><em>option</em></label>
         </fieldset>
         <label class="fld"><span>Anything else we should know?</span><textarea id="msg" placeholder="Product names, planned launch date, current distributor"></textarea></label>
@@ -139,7 +139,7 @@ const preset = ["IVD-B", "IVD-C"];
     if (cls.some((c) => c.startsWith("IVD"))) todo.push(["CH-REP and importer on label or accompanying document", "Art. 15 IvDO", "before shipping"]);
     if (cls.some((c) => c.startsWith("MD"))) todo.push(["Medical devices: CH-REP on the label", "MedDO", "before shipping"]);
     todo.push(["Product information in German, French and Italian", "DE FR IT", $("s-label").checked ? "we check" : "check"]);
-    if ($("s-import").checked) todo.push(["Swiss importer, warehouse and distribution via partner", "Art. 46 IvDO", "partner"]);
+    if ($("s-import").checked) todo.push(["Importer named and its duties agreed", "Art. 46 IvDO", "we check"]);
     return { tier, cls, fam, udi, todo };
   }
 

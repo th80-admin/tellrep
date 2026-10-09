@@ -56,10 +56,6 @@ const year = new Date().getFullYear();
         <a href="/imprint">Imprint</a>
         <a href="/privacy">Privacy</a>
       </div>
-      <div class="fcol">
-        <span class="label">Partner</span>
-        <span>Import, warehousing and distribution by TAmedics LabSolutions GmbH, Schlieren</span>
-      </div>
     </div>
     <div class="wrap fine">© {year} TellRep. Swiss authorised representative under Art. 44 IvDO and Art. 51 MedDO.</div>
   </footer>
@@ -73,7 +69,7 @@ const year = new Date().getFullYear();
 <style>
   header.top {
     position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
-    background: color-mix(in srgb, var(--studio-50) 80%, transparent);
+    background: color-mix(in srgb, var(--studio-0) 82%, transparent);
     backdrop-filter: saturate(1.6) blur(14px); -webkit-backdrop-filter: saturate(1.6) blur(14px);
     border-bottom: 1px solid transparent; transition: border-color .3s ease;
   }
@@ -87,7 +83,7 @@ const year = new Date().getFullYear();
   @media (max-width: 880px) { nav { display: none; } .cta { margin-left: auto; } }
 
   footer { border-top: 1px solid var(--hairline); padding-block: 64px 40px; color: var(--slate); font-size: 14.5px; background: var(--studio-0); }
-  .foot { display: grid; grid-template-columns: 1.4fr 1fr .7fr 1.2fr; gap: 32px; }
+  .foot { display: grid; grid-template-columns: 1.6fr 1.2fr 1fr; gap: 32px; }
   .fcol { display: grid; gap: 8px; align-content: start; }
   .fcol a { text-decoration: none; } .fcol a:hover { color: var(--ink); }
   .fcol .mono { color: var(--ink); font-size: 14px; }
