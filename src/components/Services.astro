@@ -2,10 +2,17 @@
 const services = [
   { t: "CH-REP mandate", d: "Written mandate, our name and Swiss address on your labelling, a qualified person responsible for regulatory compliance and your documents ready for Swissmedic.", r: ["Art. 44 IvDO", "Art. 51 MedDO"] },
   { t: "swissdamed registration", d: "Mandate notification in the Actors module and registration of your devices in the UDI Devices module, kept up to date as your portfolio changes.", r: ["Art. 48 IvDO", "CHRN"] },
-  { t: "Label and IFU check", d: "CH-REP and importer details, symbols and language versions in German, French and Italian, checked before you print.", r: ["Art. 15 IvDO", "DE · FR · IT"] },
+  { t: "Label and IFU check", d: "CH-REP and importer details, symbols and language versions in German, French and Italian, checked before you print. Missing Swiss details can be added by sticker.", r: ["Art. 15 IvDO", "DE · FR · IT"] },
   { t: "Vigilance and authority contact", d: "Serious incidents and field safety corrective actions reach Swissmedic on time. Complaints from Swiss users reach you without delay.", r: ["Art. 59 IvDO"] },
   { t: "Document review", d: "Before we sign, we check your declaration of conformity, certificates and the structure of your technical documentation. If something is missing, you hear it from us first.", r: ["Art. 11 IVDR"] },
+  { t: "Document vault", d: "A closed customer area for your technical documentation, declarations and IFUs. Versioned, access logged, hosted in Switzerland and ready when Swissmedic asks.", r: ["Art. 44 para. 4 IvDO", "7 days"] },
 ];
+const modules = [
+  { t: "Distributor introductions", d: "We know the Swiss distributors for laboratories, hospitals, practices and pharmacies and introduce you to those that fit. You pay us, they do not.", tag: "on request" },
+  { t: "Storage in Switzerland", d: "Warehousing on your behalf with documented storage conditions and lot traceability, so your Swiss partners can be supplied from stock.", tag: "add-on" },
+  { t: "Swiss importer", d: "If you have no importer yet, TellRep can take that role too: verification before placing on the market, our details on the device and a complaint register.", tag: "Art. 46 IvDO" },
+];
+
 const facts = [
   { n: "days", label: "until the swissdamed transition ends on 31 December 2026", live: true },
   { n: "3", label: "official languages for Swiss product information" },
@@ -38,11 +45,21 @@ const facts = [
           <div class="refs">{s.r.map((r) => <span class="ref">{r}</span>)}</div>
         </article>
       ))}
-      <article class="card" data-reveal>
-        <h3>Importer and distributor check</h3>
-        <p>Your Swiss importer and distributors have their own duties. We check that their role, labelling and complaint handling fit your mandate. We stay independent and sell no devices ourselves.</p>
-        <div class="refs"><span class="ref">Art. 46 IvDO</span><span class="ref">Art. 47 IvDO</span></div>
-      </article>
+
+    </div>
+
+    <div class="mods">
+      <div class="mhead" data-reveal>
+        <span class="label">Optional modules</span>
+        <p>Book what you need, when you need it.</p>
+      </div>
+      {modules.map((m) => (
+        <article class="mod" data-reveal>
+          <span class="ref">{m.tag}</span>
+          <h3>{m.t}</h3>
+          <p>{m.d}</p>
+        </article>
+      ))}
     </div>
   </div>
 </section>
@@ -59,6 +76,13 @@ const facts = [
   .card h3 { font-size: 19px; }
   .card p { color: var(--slate); font-size: 15px; }
   .refs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-  @media (max-width: 920px) { .facts { grid-template-columns: 1fr 1fr; } .grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .facts, .grid { grid-template-columns: 1fr; } }
+  .mods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 56px; }
+  .mhead { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .mhead p { color: var(--slate); font-size: 15px; }
+  .mod { background: var(--studio-50); border-radius: var(--r-md); padding: 26px; display: grid; gap: 10px; align-content: start; }
+  .mod .ref { justify-self: start; }
+  .mod h3 { font-size: 19px; }
+  .mod p { color: var(--slate); font-size: 15px; }
+  @media (max-width: 920px) { .mods { grid-template-columns: 1fr 1fr; } .facts { grid-template-columns: 1fr 1fr; } .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .mods, .facts, .grid { grid-template-columns: 1fr; } }
 </style>

@@ -50,7 +50,10 @@ const preset = ["IVD-B", "IVD-C"];
           <label class="opt"><input type="checkbox" id="s-rep" checked disabled /><span><b>CH-REP mandate</b><small>Mandate, document review, swissdamed registration, PRRC, annual review</small></span><em>core</em></label>
           <label class="opt"><input type="checkbox" id="s-label" /><span><b>Label and IFU check DE · FR · IT</b><small>Swiss labelling details and language versions, per product family</small></span><em>add-on</em></label>
           <label class="opt"><input type="checkbox" id="s-fees" checked /><span><b>Handle Swissmedic registration fees</b><small>We pay the swissdamed fees to Swissmedic and pass them on at cost</small></span><em>add-on</em></label>
-          <label class="opt"><input type="checkbox" id="s-import" /><span><b>Importer and distributor check</b><small>Roles, labelling and complaint handling of your Swiss partners</small></span><em>add-on</em></label>
+          <label class="opt"><input type="checkbox" id="s-vault" /><span><b>Document vault</b><small>Closed customer area for technical documentation and IFUs</small></span><em>add-on</em></label>
+          <label class="opt"><input type="checkbox" id="s-intro" /><span><b>Distributor introductions</b><small>Swiss sales partners that fit your devices</small></span><em>module</em></label>
+          <label class="opt"><input type="checkbox" id="s-store" /><span><b>Storage in Switzerland</b><small>Warehousing on your behalf with lot traceability</small></span><em>module</em></label>
+          <label class="opt"><input type="checkbox" id="s-importer" /><span><b>TellRep as Swiss importer</b><small>Importer role, our details on the device, complaint register</small></span><em>module</em></label>
           <label class="opt"><input type="checkbox" id="s-3y" /><span><b>Three year commitment</b><small>Better terms for a longer mandate</small></span><em>option</em></label>
         </fieldset>
         <label class="fld"><span>Anything else we should know?</span><textarea id="msg" placeholder="Product names, planned launch date, current distributor"></textarea></label>
@@ -139,7 +142,11 @@ const preset = ["IVD-B", "IVD-C"];
     if (cls.some((c) => c.startsWith("IVD"))) todo.push(["CH-REP and importer on label or accompanying document", "Art. 15 IvDO", "before shipping"]);
     if (cls.some((c) => c.startsWith("MD"))) todo.push(["Medical devices: CH-REP on the label", "MedDO", "before shipping"]);
     todo.push(["Product information in German, French and Italian", "DE FR IT", $("s-label").checked ? "we check" : "check"]);
-    if ($("s-import").checked) todo.push(["Importer named and its duties agreed", "Art. 46 IvDO", "we check"]);
+    if ($("s-importer").checked) todo.push(["TellRep named as importer on device, packaging or accompanying document", "Art. 46 IvDO", "we do"]);
+    else todo.push(["Importer named and its duties agreed", "Art. 46 IvDO", "check"]);
+    if ($("s-store").checked) todo.push(["Storage conditions and lot traceability agreed", "storage", "we do"]);
+    if ($("s-intro").checked) todo.push(["Shortlist of Swiss distributors for your devices", "market entry", "we do"]);
+    if ($("s-vault").checked) todo.push(["Technical documentation uploaded to your vault", "Art. 44 IvDO", "we set up"]);
     return { tier, cls, fam, udi, todo };
   }
 
@@ -173,7 +180,7 @@ const preset = ["IVD-B", "IVD-C"];
       ref, company: $("company").value, country: $("country").value, name: $("name").value, email: $("email").value,
       situation: ($("situation") as unknown as HTMLSelectElement).value, classes: q.cls.join(", "),
       product_families: q.fam, udi_dis: q.udi, package: q.tier,
-      services: ["label", "fees", "import", "3y"].filter((s) => $("s-" + s).checked).join(", "),
+      services: ["label", "fees", "vault", "intro", "store", "importer", "3y"].filter((s) => $("s-" + s).checked).join(", "),
       message: $("msg").value, todo: q.todo.map(([t, r, w]) => `${t} (${r}, ${w})`).join("\n"),
     };
     const endpoint = form.dataset.endpoint; const key = form.dataset.key;
