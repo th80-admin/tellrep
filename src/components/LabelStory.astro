@@ -98,6 +98,8 @@ const steps = [
   :global(.js) .story[data-pinned] .chrep, :global(.js) .story[data-pinned] .stamp { opacity: 0; }
 
   @media (min-width: 900px) {
+    :global(.js) .story[data-pinned] { height: 340vh; padding-block: 0; }
+    :global(.js) .story[data-pinned] .grid { position: sticky; top: 0; height: 100vh; padding-top: 64px; box-sizing: border-box; }
     :global(.js) .story[data-pinned] .texts { display: block; min-height: 240px; }
     :global(.js) .story[data-pinned] .step { position: absolute; top: 36px; left: 0; opacity: 0; }
   }

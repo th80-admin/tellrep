@@ -26,11 +26,41 @@ const chips = [
     ))}
     <div class="apple-wrap">
       <div class="apple-float">
+        <div class="impact">
         <Apple id="hero" size={190} />
-        <svg class="arrow" viewBox="0 0 300 24" width="300" height="24">
-          <line x1="10" y1="12" x2="300" y2="12" stroke="#161B20" stroke-width="3" stroke-linecap="round" />
-          <path d="M10 12 L0 3 M10 12 L0 21 M24 12 L14 3 M24 12 L14 21 M38 12 L28 3 M38 12 L28 21" stroke="#161B20" stroke-width="3" stroke-linecap="round" fill="none" />
+        <svg class="arrow" viewBox="0 0 320 40" width="320" height="40">
+          <defs>
+            <linearGradient id="bolt-shaft" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#E8CFA6" />
+              <stop offset="0.45" stop-color="#B8885A" />
+              <stop offset="1" stop-color="#6F4A2C" />
+            </linearGradient>
+            <linearGradient id="bolt-red" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#E23A52" />
+              <stop offset="1" stop-color="#9E0C24" />
+            </linearGradient>
+            <linearGradient id="bolt-white" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#FFFFFF" />
+              <stop offset="1" stop-color="#D9DEE2" />
+            </linearGradient>
+            <radialGradient id="bolt-hole" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#3D0410" />
+              <stop offset="0.6" stop-color="#6E0819" />
+              <stop offset="1" stop-color="#6E0819" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <rect x="14" y="16.6" width="304" height="6.8" rx="3.4" fill="url(#bolt-shaft)" />
+          <path d="M18 17 L20 1 C34 2.5 56 10 78 17 Z" fill="url(#bolt-red)" />
+          <path d="M18 23 L20 39 C34 37.5 56 30 78 23 Z" fill="url(#bolt-white)" stroke="#C9CFD4" stroke-width="0.6" />
+          <rect x="16" y="18.8" width="62" height="2.4" rx="1.2" fill="#161B20" opacity="0.55" />
+          <rect x="82" y="16.2" width="5" height="7.6" rx="1" fill="#161B20" />
+          <rect x="89" y="16.2" width="2" height="7.6" rx="1" fill="#161B20" />
+          <rect x="5" y="15.8" width="13" height="8.4" rx="2.8" fill="#161B20" />
+          <rect x="7" y="17.6" width="5" height="1.4" rx="0.7" fill="#fff" opacity="0.35" />
+          <rect x="14" y="17.6" width="304" height="1.6" rx="0.8" fill="#fff" opacity="0.3" />
+          <g class="hit"><ellipse cx="318" cy="20" rx="5" ry="7.5" fill="url(#bolt-hole)" /></g>
         </svg>
+        </div>
       </div>
       <div class="floor"></div>
     </div>
@@ -48,7 +78,8 @@ const chips = [
   .apple-wrap { position: relative; width: 190px; height: 300px; display: grid; place-items: end center; }
   .apple-float { position: relative; z-index: 2; filter: drop-shadow(0 28px 32px rgba(110, 8, 25, 0.18)); animation: float 6s ease-in-out infinite; margin-bottom: 70px; }
   .floor { position: absolute; bottom: 40px; width: 170px; height: 26px; border-radius: 50%; background: radial-gradient(closest-side, rgba(22, 27, 32, 0.18), rgba(22, 27, 32, 0)); animation: floor 6s ease-in-out infinite; }
-  .arrow { position: absolute; z-index: 3; left: 50%; top: 56%; width: 300px; height: 24px; margin-top: -12px; transform: translateX(-282px); }
+  .impact { position: relative; }
+  .arrow { position: absolute; z-index: 3; left: 0; top: 52%; width: 320px; height: 40px; max-width: none; margin-top: -20px; transform: translateX(-290px) rotate(-4deg); transform-origin: 100% 50%; filter: drop-shadow(0 8px 6px rgba(22, 27, 32, 0.16)); }
   @keyframes float { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
   @keyframes floor { 0%, 100% { transform: scale(1); opacity: 1 } 50% { transform: scale(.9); opacity: .75 } }
 
@@ -57,7 +88,7 @@ const chips = [
     .stage { height: 430px; margin-top: 40px; }
     .chip:first-child, .chip:nth-child(6) { display: none; }
     .chip { font-size: 11.5px; padding: 5px 10px; transform: translate(calc(-50% + var(--x) * 0.5), calc(var(--y) * 0.8)); }
-    .arrow { width: 220px; transform: translateX(-206px); }
+    .arrow { width: 112px; height: 14px; margin-top: -7px; transform: translateX(-87px) rotate(-4deg); }
   }
   @media (prefers-reduced-motion: reduce) { .apple-float, .floor { animation: none; } }
 </style>

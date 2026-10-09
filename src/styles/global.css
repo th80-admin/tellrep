@@ -37,9 +37,10 @@ body {
   font-size: 16.5px;
   line-height: 1.62;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 img, svg { max-width: 100%; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
 a { color: inherit; }
 :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 3px; }
 h1, h2, h3, h4 { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }

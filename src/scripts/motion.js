@@ -1,6 +1,5 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,23 +19,8 @@ document.querySelectorAll('[data-count="days"]').forEach((el) => (el.textContent
 if (reduce) {
   // CSS shows final states under prefers-reduced-motion
 } else {
-  /* smooth scroll */
-  const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
-  lenis.on("scroll", ScrollTrigger.update);
-  gsap.ticker.add((t) => lenis.raf(t * 1000));
-  gsap.ticker.lagSmoothing(0);
-  document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach((a) => {
-    a.addEventListener("click", (e) => {
-      const href = a.getAttribute("href");
-      if (href.startsWith("/#") && location.pathname !== "/") return;
-      const id = href.replace(/^\//, "");
-      const target = id.length > 1 && document.querySelector(id);
-      if (!target) return;
-      e.preventDefault();
-      lenis.scrollTo(target, { offset: -72 });
-      history.replaceState(null, "", id);
-    });
-  });
+  /* native scrolling; smooth anchor jumps via CSS scroll-behavior */
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   /* reveals */
   gsap.set("[data-reveal]", { opacity: 0, y: 18 });
@@ -63,12 +47,17 @@ if (reduce) {
   const hero = document.querySelector(".hero");
   if (hero) {
     const stage = hero.querySelector(".stage");
+    const arrow = hero.querySelector(".arrow");
+    const impact = hero.querySelector(".impact");
+    const hit = hero.querySelector(".arrow .hit");
+    gsap.set(hit, { opacity: 0 });
     const tl = gsap.timeline({ paused: true });
     tl.from(hero.querySelectorAll(".chip"), { opacity: 0, duration: 0.7, stagger: 0.07, ease: "power2.out" })
-      .from(hero.querySelector(".arrow"), { x: "-=520", opacity: 0, duration: 0.55, ease: "power4.in" }, 0.25)
-      .to(hero.querySelector(".apple-float svg:first-child"), { rotation: 7, transformOrigin: "50% 90%", duration: 0.09, ease: "power1.out" })
-      .to(hero.querySelector(".apple-float svg:first-child"), { rotation: 0, duration: 1.1, ease: "elastic.out(1.1, 0.3)" })
-      .to(hero.querySelector(".arrow"), { rotation: 1.5, transformOrigin: "100% 50%", duration: 0.08, yoyo: true, repeat: 3, ease: "sine.inOut" }, "<");
+      .from(arrow, { x: "-=560", opacity: 0, duration: 0.5, ease: "power3.in" }, 0.2)
+      .set(hit, { opacity: 1 })
+      .to(impact, { x: 7, rotation: 5, transformOrigin: "50% 85%", duration: 0.08, ease: "power2.out" })
+      .to(impact, { x: 0, rotation: 0, duration: 1.2, ease: "elastic.out(1, 0.28)" })
+      .fromTo(arrow, { rotation: -6 }, { rotation: -4, duration: 0.9, ease: "elastic.out(1.2, 0.15)" }, "<");
     ScrollTrigger.create({ trigger: stage, start: "center 92%", once: true, onEnter: () => tl.delay(0.15).play() });
   }
 
@@ -108,6 +97,7 @@ if (reduce) {
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 900px)", () => {
+      // section becomes a tall scroll track, the stage is position: sticky (CSS). No pin spacer, no layout jumps.
       story.setAttribute("data-pinned", "");
       gsap.set(steps, { opacity: 0, y: 24 });
       gsap.set(steps[0], { opacity: 1, y: 0 });
@@ -116,9 +106,9 @@ if (reduce) {
       gsap.set(stamp, { opacity: 0, scale: 1.6 });
       const tl = gsap.timeline({
         defaults: { ease: "power2.inOut" },
-        scrollTrigger: { trigger: story, start: "top top", end: "+=2200", pin: true, scrub: 0.6, anticipatePin: 1 },
+        scrollTrigger: { trigger: story, start: "top top", end: "bottom bottom", scrub: 0.5, invalidateOnRefresh: true },
       });
-      const swap = (from, to) => tl.to(steps[from], { opacity: 0, y: -24, duration: 0.5 }).to(steps[to], { opacity: 1, y: 0, duration: 0.5 }, "<0.25");
+      const swap = (from, to) => tl.to(steps[from], { opacity: 0, y: -24, duration: 0.5 }).to(steps[to], { opacity: 1, y: 0, duration: 0.5 });
       tl.to({}, { duration: 0.4 });
       swap(0, 1);
       tl.to(missing, { opacity: 1, duration: 0.4 }, "<").to({}, { duration: 0.5 });
@@ -126,6 +116,7 @@ if (reduce) {
       tl.to(missing, { opacity: 0, duration: 0.4 }, "<").to(chrep, { opacity: 1, y: 0, duration: 0.5 }, "<0.2").to({}, { duration: 0.5 });
       swap(2, 3);
       tl.to(stamp, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.4)" }, "<0.2").to({}, { duration: 0.6 });
+      ScrollTrigger.refresh();
       return () => {
         story.removeAttribute("data-pinned");
         gsap.set([...steps, missing, chrep, stamp], { clearProps: "all" });
@@ -147,7 +138,7 @@ if (reduce) {
       p.style.strokeDashoffset = `${len}`;
     });
     const tl = gsap.timeline({ scrollTrigger: { trigger: org.querySelector(".map"), start: "top 75%", once: true } });
-    tl.from(org.querySelector(".center"), { opacity: 0, scale: 0.8, duration: 0.6, ease: "back.out(1.8)" })
+    tl.from(org.querySelector(".hub"), { opacity: 0, scale: 0.8, duration: 0.6, ease: "back.out(1.8)" })
       .from(org.querySelectorAll(".node"), { opacity: 0, duration: 0.5, stagger: 0.07 }, 0.15)
       .to(lines, { strokeDashoffset: 0, duration: 1.1, stagger: 0.07, ease: "power2.out" }, 0.3)
       .call(() => lines.forEach((p) => { p.style.strokeDasharray = "4 5"; p.style.strokeDashoffset = "0"; }));
