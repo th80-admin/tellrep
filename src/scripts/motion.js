@@ -54,6 +54,7 @@ if (reduce) {
     const tl = gsap.timeline({ paused: true });
     tl.from(hero.querySelectorAll(".chip"), { opacity: 0, duration: 0.7, stagger: 0.07, ease: "power2.out" })
       .from(arrow, { x: "-=560", opacity: 0, duration: 0.5, ease: "power3.in" }, 0.2)
+      .from(hero.querySelector(".bolt-shadow"), { x: -560, opacity: 0, duration: 0.5, ease: "power3.in" }, 0.2)
       .set(hit, { opacity: 1 })
       .to(impact, { x: 7, rotation: 5, transformOrigin: "50% 85%", duration: 0.08, ease: "power2.out" })
       .to(impact, { x: 0, rotation: 0, duration: 1.2, ease: "elastic.out(1, 0.28)" })
