@@ -4,7 +4,7 @@ Guidance for Claude Code in the TellRep website repository.
 
 ## Project
 
-TellRep is a Swiss authorised representative (CH-REP) for IVD and medical device manufacturers. This is its marketing website: Astro 5, GSAP for scroll motion, self-hosted fonts, static output. Repo `th80-admin/tellrep`, branch `main`.
+TellRep is a Swiss authorised representative (CH-REP) for IVD and medical device manufacturers. This is its marketing website: Astro 7, GSAP for scroll motion, self-hosted fonts, static output. Repo `th80-admin/tellrep`, branch `main`.
 
 ```bash
 npm install
