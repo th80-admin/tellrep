@@ -1,6 +1,6 @@
 # TellRep website
 
-Swiss authorised representative (CH-REP) for IVD and medical device manufacturers. Static site built with Astro, GSAP ScrollTrigger and Lenis.
+Swiss authorised representative (CH-REP) for IVD and medical device manufacturers. Static site built with Astro 7, GSAP (ScrollTrigger) and Lenis. Working rules for Claude Code are in `CLAUDE.md`.
 
 ## Run locally
 

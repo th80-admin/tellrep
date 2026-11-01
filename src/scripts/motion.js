@@ -1,5 +1,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,8 +21,15 @@ document.querySelectorAll('[data-count="days"]').forEach((el) => (el.textContent
 if (reduce) {
   // CSS shows final states under prefers-reduced-motion
 } else {
-  /* native scrolling; smooth anchor jumps via CSS scroll-behavior */
   ScrollTrigger.config({ ignoreMobileResize: true });
+
+  /* smooth wheel scrolling (desktop only; touch stays native). Driven by the GSAP ticker so
+     ScrollTrigger and Lenis read the same scroll position on every frame. No pinning is used anywhere:
+     the label story relies on CSS sticky, which Lenis does not interfere with. */
+  const lenis = new Lenis({ lerp: 0.12, wheelMultiplier: 0.9, anchors: true, autoRaf: false });
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
 
   /* reveals */
   gsap.set("[data-reveal]", { opacity: 0, y: 18 });
