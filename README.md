@@ -1,6 +1,6 @@
 # TellRep website
 
-Swiss authorised representative (CH-REP) for IVD and medical device manufacturers. Static site built with Astro and GSAP ScrollTrigger.
+Swiss authorised representative (CH-REP) for IVD and medical device manufacturers. Static site built with Astro, GSAP ScrollTrigger and Lenis.
 
 ## Run locally
 
